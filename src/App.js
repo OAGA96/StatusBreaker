@@ -9,7 +9,7 @@ const App = () => {
   const [realData, setRealData] = useState();
   const [type, setType] = useState(0);
   const [loaded, setLoaded] = useState(false);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(60);
 
   const scrollLib = Scroll.animateScroll;
 
