@@ -9,7 +9,7 @@ const App = () => {
   const [realData, setRealData] = useState();
   const [type, setType] = useState(0);
   const [loaded, setLoaded] = useState(false);
-  const [timer, setTimer] = useState(120);
+  const [timer, setTimer] = useState(10);
 
   const scrollLib = Scroll.animateScroll;
 
@@ -30,14 +30,18 @@ const App = () => {
   useEffect(() => {
     const timerId = setInterval(async () => {
       if (timer <= 0) {
-        setTimer(120);
+        if (type === 0) {
+          setTimer(240);
+        } else {
+          setTimer(80);
+        }
         if (type === 0) {
           scrollLib.scrollToTop();
           setLoaded(false);
           await StatusAPI.get("/Reporte2")
             .then((data) => {
               setRealData(data.data);
-              console.log(data.data)
+              console.log(data.data);
             })
             .then(() => {
               setLoaded(true);
@@ -45,15 +49,15 @@ const App = () => {
             });
           scrollLib.scrollToBottom({
             delay: 2000,
-            duration: 130000,
+            duration: 240000,
             isDynamic: true,
-            smoot: 'linear'
+            smooth: "linear",
           });
         } else {
           scrollLib.scrollToTop();
           setLoaded(false);
           await StatusAPI.get("/Reporte1").then((data) => {
-            console.log(data.data)
+            console.log(data.data);
             setRealData(data.data);
             setLoaded(true);
             setType(0);
@@ -133,8 +137,8 @@ const App = () => {
             {type === 0 ? realData.map(renderRow1) : realData.map(renderRow2)}
           </tbody>
         </ReactBootStrap.Table>
-        <h1> {timer} </h1>
-        <h1> {type} </h1>
+        {/* <h1> {timer} </h1>
+        <h1> {type} </h1> */}
       </div>
     );
   } else {
